@@ -532,4 +532,4 @@ const instr = instrStr.split("\n")
 
 instr.forEach(move);
 
-console.log(Object.values(stacks).map(s => s[0]).join(''));
+console.log(stacks.map(s => s[0]).join(''));
