@@ -512,24 +512,18 @@ move 1 from 2 to 8
 move 8 from 5 to 1
 move 1 from 2 to 7`;
 
-const [stacksStr, instrStr] = input.split('\n\n');
+const [stacksStr, instrStr] = input.split("\n\n");
 
-const transpose = str => str.split("\n").reduce((acc, cur) => {
-    cur.split('').forEach((chr, i) => acc[i] = [...(acc[i] || []), chr]);
-    return acc;
-}, []);
+stacksStr.replace("\n", " ");
 
-const stacks = transpose(stacksStr)
-    .map(row => row.filter(chr => chr.match(/[A-Z]/)))
-    .filter(row => row.length);
+const stacks = [...Array(9)].map(_ => []);
+for (let i = 0; i <= stacksStr.length; i += 4) {
+    stacksStr[i + 2] !== ' ' && stacks[(i / 4) % 9].push(stacksStr[i + 2]);
+}
 
-const move = ([count, from, to]) => {
-    stacks[to - 1].splice(0, 0, ...stacks[from - 1].splice(0, count));
-};
-
-const instr = instrStr.split("\n")
-    .map(str => str.match(/move (\d+) from (\d+) to (\d+)/)?.slice(1, 4).map(Number));
-
-instr.forEach(move);
+for (instr of instrStr.split("\n")) {
+    const [count, from, to] = instr.split(" ").map(Number).filter(Boolean);
+    stacks[to - 1].unshift(...stacks[from - 1].splice(0, count));
+}
 
 console.log(stacks.map(s => s[0]).join(''));
