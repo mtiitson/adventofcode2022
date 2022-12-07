@@ -947,7 +947,7 @@ $ cd ..
 $ cd ..
 $ cd gqc
 $ ls
-156273 wpgwrdl`.split("$").map(str => str.trim());
+156273 wpgwrdl`;
 
 const pwd = ['/'];
 const files = {};
@@ -959,18 +959,14 @@ const ls = (str) => {
     Object.defineProperty(files, cwd, {
         get: () =>
             res.reduce((acc, [size, name]) => {
-                if (size === 'dir') {
-                    acc += files[[...cwd, name]];
-                } else {
-                    acc += +size;
-                }
+                acc += +size ? +size : files[[...cwd, name]];
                 return acc;
             }, 0)
         , enumerable: true
     });
 };
 
-input.slice(1).forEach(cmd => {
+input.split("$").map(s => s.trim()).slice(1).forEach(cmd => {
     cmd.match("cd (.+)")?.slice(1, 2).forEach(cd);
     cmd.match(/ls\n([\s\S]+)/)?.slice(1, 2).forEach(ls);
 });
