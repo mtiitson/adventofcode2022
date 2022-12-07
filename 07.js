@@ -957,12 +957,8 @@ const ls = (str) => {
     const res = str.split("\n").map(r => r.split(" "));
     const cwd = [...pwd];
     Object.defineProperty(files, cwd, {
-        get: () =>
-            res.reduce((acc, [size, name]) => {
-                acc += +size ? +size : files[[...cwd, name]];
-                return acc;
-            }, 0)
-        , enumerable: true
+        get: () => res.reduce((acc, [size, name]) => acc + (+size ? +size : files[[...cwd, name]]), 0),
+        enumerable: true
     });
 };
 
