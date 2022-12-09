@@ -2018,21 +2018,10 @@ const follow = i => {
         adx = Math.abs(dx),
         dy = prev[1] - cur[1],
         ady = Math.abs(dy);
-    if (adx > 1 && ady > 1) {
-        cur[0] += adx / dx;
-        cur[1] += ady / dy;
-        return true;
-    }
-    if (adx > 1) {
-        cur[0] += adx / dx;
-        if (ady) cur[1] = prev[1];
-        return true;
-    }
-    if (ady > 1) {
-        cur[1] += ady / dy;
-        if (adx) cur[0] = prev[0];
-        return true;
-    }
+    if (adx < 2 && ady < 2) return false;
+    if (adx > 0) cur[0] += adx / dx;
+    if (ady > 0) cur[1] += ady / dy;
+    return true;
 };
 
 
