@@ -2018,10 +2018,9 @@ const follow = i => {
         adx = Math.abs(dx),
         dy = prev[1] - cur[1],
         ady = Math.abs(dy);
-    if (adx < 2 && ady < 2) return false;
+    if (adx < 2 && ady < 2) return;
     if (adx > 0) cur[0] += adx / dx;
     if (ady > 0) cur[1] += ady / dy;
-    return true;
 };
 
 
@@ -2032,9 +2031,8 @@ input.split('\n')
     })
     .forEach(dir => {
         lead(dir);
-        while (knots.map((_, i) => i).slice(1).map(follow).some(Boolean)) {
-            visited.add(knots[T].join(':'));
-        }
+        knots.map((_, i) => i).slice(1).forEach(follow);
+        visited.add(knots[T].join(':'));
     });
 
 console.log(visited);
