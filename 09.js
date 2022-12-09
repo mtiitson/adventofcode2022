@@ -2011,9 +2011,8 @@ const lead = dir =>
     || dir === 'R' && knots[0][0]++
     || dir === 'L' && knots[0][0]--;
 
-const follow = i => {
-    const cur = knots[i],
-        prev = knots[i - 1];
+const follow = (cur, i) => {
+    const prev = knots[i];
     const dx = prev[0] - cur[0],
         adx = Math.abs(dx),
         dy = prev[1] - cur[1],
@@ -2023,7 +2022,6 @@ const follow = i => {
     if (ady > 0) cur[1] += ady / dy;
 };
 
-
 input.split('\n')
     .flatMap(row => {
         const [dir, count] = row.split(' ');
@@ -2031,7 +2029,7 @@ input.split('\n')
     })
     .forEach(dir => {
         lead(dir);
-        knots.map((_, i) => i).slice(1).forEach(follow);
+        knots.slice(1).forEach(follow);
         visited.add(knots[T].join(':'));
     });
 
