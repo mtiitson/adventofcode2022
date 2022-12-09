@@ -2006,10 +2006,10 @@ const visited = new Set().add('0:0');
 const knots = [...new Array(T + 1)].map(_ => [0, 0]);
 
 const lead = dir =>
-    dir === 'U' && knots[0][1]++
-    || dir === 'D' && knots[0][1]--
-    || dir === 'R' && knots[0][0]++
-    || dir === 'L' && knots[0][0]--;
+    dir === 'U' && knots[0][1]++ ||
+    dir === 'D' && knots[0][1]-- ||
+    dir === 'R' && knots[0][0]++ ||
+    dir === 'L' && knots[0][0]--;
 
 const follow = (cur, i) => {
     const prev = knots[i];
