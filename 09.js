@@ -2004,11 +2004,12 @@ const T = 9; // Part 2
 
 const visited = new Set().add('0:0');
 const knots = [...new Array(T + 1)].map(_ => [0, 0]);
-const move = (knot, dir) =>
-    dir === 'U' && knot[1]++
-    || dir === 'D' && knot[1]--
-    || dir === 'R' && knot[0]++
-    || dir === 'L' && knot[0]--;
+
+const lead = dir =>
+    dir === 'U' && knots[0][1]++
+    || dir === 'D' && knots[0][1]--
+    || dir === 'R' && knots[0][0]++
+    || dir === 'L' && knots[0][0]--;
 
 const follow = i => {
     const cur = knots[i],
@@ -2017,19 +2018,16 @@ const follow = i => {
         adx = Math.abs(dx),
         dy = prev[1] - cur[1],
         ady = Math.abs(dy);
-
     if (adx > 1 && ady > 1) {
         cur[0] += adx / dx;
         cur[1] += ady / dy;
         return true;
     }
-
     if (adx > 1) {
         cur[0] += adx / dx;
         if (ady) cur[1] = prev[1];
         return true;
     }
-
     if (ady > 1) {
         cur[1] += ady / dy;
         if (adx) cur[0] = prev[0];
@@ -2044,7 +2042,7 @@ input.split('\n')
         return [...new Array(Number(count))].map(_ => dir);
     })
     .forEach(dir => {
-        move(knots[0], dir);
+        lead(dir);
         while (knots.map((_, i) => i).slice(1).map(follow).some(Boolean)) {
             visited.add(knots[T].join(':'));
         }
