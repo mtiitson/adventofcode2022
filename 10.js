@@ -153,11 +153,12 @@ console.log(
     [20, 60, 100, 140, 180, 220].map(cycle => xAt[cycle] * cycle).reduce((a, b) => a + b)
 );
 
-const screen = [...new Array(6)].map(_ => [...new Array(40)])
-    .map((row, i) => row.map((_, j) => {
-        const cycle = (i * row.length) + (j + 1);
-        return Math.abs(xAt[cycle] - j) < 2 ? '█' : ' ';
-    }));
+const screen = [...new Array(6)]
+    .map((_, i) => [...new Array(40)]
+        .map((_, j) => {
+            const cycle = (i * 40) + (j + 1);
+            return Math.abs(xAt[cycle] - j) < 2 ? '█' : ' ';
+        }));
 
 console.log(
     screen.map(row => row.join('')).join('\n')
