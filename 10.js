@@ -141,24 +141,25 @@ noop`
     .split('\n')
     .map(row => row.split(' '));
 
-let x = 1;
-const xAtEnd = [];
+const xAt = [undefined, 1]; // 1-indexed
+xAt.last = () => xAt[xAt.length - 1];
 
 input.forEach(([_, arg]) => {
-    xAtEnd.push(x);
-    if (arg) xAtEnd.push(x += +arg);
+    xAt.push(xAt.last());
+    if (arg) xAt.push(xAt.last() + +arg);
 });
 
 console.log(
-    [20, 60, 100, 140, 180, 220].map(n => xAtEnd[n - 2] * n).reduce((a, b) => a + b)
+    [20, 60, 100, 140, 180, 220].map(cycle => xAt[cycle] * cycle).reduce((a, b) => a + b)
 );
 
 const screen = [...new Array(6)].map(_ => [...new Array(40)].map(_ => ' '))
     .map((row, i) => row.map((_, j) => {
-        const cycle = (i * row.length) + j;
-        const x = xAtEnd[cycle - 1];
-        return [x - 1, x, x + 1].includes(j) ? '#' : '.';
+        const cycle = (i * row.length) + (j + 1);
+        return Math.abs(xAt[cycle] - j) < 2 ? '#' : '.';
     }));
 
-console.log(screen.map(row => row.join('')).join('\n'));
+console.log(
+    screen.map(row => row.join('')).join('\n')
+);
 
