@@ -141,23 +141,23 @@ noop`
     .split('\n')
     .map(row => row.split(' '));
 
-const xAt = [undefined, 1]; // 1-indexed
-xAt.last = () => xAt[xAt.length - 1];
+const x = [undefined, 1]; // 1-indexed
+x.last = () => x[x.length - 1];
 
 input.forEach(([_, arg]) => {
-    xAt.push(xAt.last());
-    if (arg) xAt.push(xAt.last() + +arg);
+    x.push(x.last());
+    if (arg) x.push(x.last() + +arg);
 });
 
 console.log(
-    [20, 60, 100, 140, 180, 220].map(cycle => xAt[cycle] * cycle).reduce((a, b) => a + b)
+    [20, 60, 100, 140, 180, 220].map(cycle => x[cycle] * cycle).reduce((a, b) => a + b)
 );
 
 const screen = [...new Array(6)]
     .map((_, i) => [...new Array(40)]
         .map((_, j) => {
             const cycle = (i * 40) + (j + 1);
-            return Math.abs(xAt[cycle] - j) < 2 ? '█' : ' ';
+            return Math.abs(x[cycle] - j) < 2 ? '█' : ' ';
         }));
 
 console.log(
