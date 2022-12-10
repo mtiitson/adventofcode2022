@@ -156,7 +156,7 @@ console.log(
 const screen = [...new Array(6)].map(_ => [...new Array(40)].map(_ => ' '))
     .map((row, i) => row.map((_, j) => {
         const cycle = (i * row.length) + (j + 1);
-        return Math.abs(xAt[cycle] - j) < 2 ? '#' : '.';
+        return Math.abs(xAt[cycle] - j) < 2 ? '█' : ' ';
     }));
 
 console.log(
