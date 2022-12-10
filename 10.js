@@ -155,9 +155,9 @@ console.log(
 
 const screen = [...new Array(6)].map(_ => [...new Array(40)].map(_ => ' '))
     .map((row, i) => row.map((_, j) => {
-        const cycle = (i * row.length) + (j + 1);
+        const cycle = (i * row.length) + j;
         const x = xAtEnd[cycle - 1];
-        return [x - 1, x, x + 1].includes(j + 1) ? '#' : '.';
+        return [x - 1, x, x + 1].includes(j) ? '#' : '.';
     }));
 
 console.log(screen.map(row => row.join('')).join('\n'));
