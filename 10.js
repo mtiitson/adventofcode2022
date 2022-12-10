@@ -142,16 +142,13 @@ noop`
     .map(row => row.split(' '));
 
 const x = [undefined, 1]; // 1-indexed
-x.last = () => x[x.length - 1];
 
 input.forEach(([_, arg]) => {
-    x.push(x.last());
-    if (arg) x.push(x.last() + +arg);
+    x.push(x[x.length - 1]);
+    if (arg) x.push(x[x.length - 1] + +arg);
 });
 
-console.log(
-    [20, 60, 100, 140, 180, 220].map(cycle => x[cycle] * cycle).reduce((a, b) => a + b)
-);
+console.log([20, 60, 100, 140, 180, 220].map(cycle => x[cycle] * cycle).reduce((a, b) => a + b));
 
 const screen = [...new Array(6)]
     .map((_, i) => [...new Array(40)]
@@ -160,7 +157,5 @@ const screen = [...new Array(6)]
             return Math.abs(x[cycle] - j) < 2 ? '█' : ' ';
         }));
 
-console.log(
-    screen.map(row => row.join('')).join('\n')
-);
+console.log(screen.map(row => row.join('')).join('\n'));
 
