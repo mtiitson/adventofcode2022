@@ -58,11 +58,7 @@ const monkeys = input.map(str => {
     const [_, monkey, items, op, divisor, nextTrue, nextFalse] = str.match(/Monkey (\d+):\s+Starting items: ([0-9, ]+)Operation: new = (.+)\s\sTest: divisible by (\d+)\s+If true: throw to monkey (\d+)\s+If false: throw to monkey (\d+)/);
     return {
         items: items.split(',').map(Number),
-        inspect: function () {
-            this.inspected++;
-            const old = this.items.shift();
-            return eval(op)
-        },
+        op: old => eval(op),
         next: val => val % +divisor === 0 ? +nextTrue : +nextFalse,
         inspected: 0,
         divisor
@@ -73,8 +69,8 @@ const P = monkeys.map(m => m.divisor).reduce((a, b) => a * b, 1);
 
 const round = () => {
     monkeys.forEach(monkey => {
-        while (monkey.items.length) {
-            const worry = monkey.inspect();
+        while (monkey.items.length && ++monkey.inspected) {
+            const worry = monkey.op(monkey.items.shift());
             monkeys[monkey.next(worry)].items.push(worry % P);
         }
     });
