@@ -153,9 +153,9 @@ const input = `493,23 -> 493,20 -> 493,23 -> 495,23 -> 495,22 -> 495,23 -> 497,2
 466,174 -> 470,174`.split('\n').map(row => row.split(' -> ').map(pair => pair.split(',').map(Number)));
 
 const maxX = Math.max(...input.flatMap(row => row.map(pair => pair[0]))) + 1000; // Part 2: extend the rock bottom by safe margin
-const maxY = Math.max(...input.flatMap(row => row.map(pair => pair[1])));
+const maxY = Math.max(...input.flatMap(row => row.map(pair => pair[1]))) + 3; // Part 2: add 2 more rows
 
-const rows = [...new Array(maxY + 3)].map(_ => [...new Array(maxX + 1)].map(_ => ({}))); // Part 2: add 2 more rows
+const rows = [...new Array(maxY)].map(_ => [...new Array(maxX + 1)].map(_ => ({})));
 
 const cols = rows[0].map((_, i) => rows.map(row => row[i]));
 
